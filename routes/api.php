@@ -1,8 +1,11 @@
 <?php
+
+use App\Http\Controllers\AddressController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -21,7 +24,13 @@ Route::group([
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/confirmLogin/{id}', [AuthController::class, 'confirmEmail']);
     Route::post('/register', [AuthController::class, 'register']);
-    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('/logout', [AuthController::class, 'logout'])  ;
     Route::post('/refresh', [AuthController::class, 'refresh']);
-    Route::get('/user-profile', [AuthController::class, 'userProfile']);
+    Route::post('/me', [AuthController::class, 'me']);
+});
+
+Route::prefix('/auth/user-profile')->middleware('api')->group(function () {
+    Route::get('/', [AuthController::class, 'userProfile']);
+    Route::get('/my-address',[UserController::class,'getAddresses']);
+    Route::post('/my-address/add',[AddressController::class,'addAddress']);
 });

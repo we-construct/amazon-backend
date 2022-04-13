@@ -134,6 +134,10 @@ class AuthController extends Controller
        }
 
     }
+    public function me()
+    {
+        return response()->json(auth()->user());
+    }
 
     public function forgotPassword(Request $request){
 

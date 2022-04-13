@@ -10,11 +10,13 @@ class Address extends Model
 {
     use HasFactory;
     use HasFactory, Notifiable;
-
+    public $table = "address";
     protected $fillable = [
-        'name',
         'user_id',
         'address',
     ];
 
+    public function owner(){
+        return $this->belongsTo('App\Models\User','user_id','id');
+    }
 }
