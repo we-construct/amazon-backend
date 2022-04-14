@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Address;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class AddressController extends Controller
@@ -22,11 +23,30 @@ class AddressController extends Controller
         } else {
             Address::create([
                 'address' => $request->address,
-                'user_id' => auth()->user()->id,
+                'user_id' => Auth::user()->id,
             ]);
 
             return response('success', 200);
         }
 
+    }
+
+    public function updateAddress(Request $request, $id)
+    {
+        if (Address::where('id', $id)->exists()) {
+            Address::where('id', $id)->update(['address' => $request->address]);
+            return "success";
+        } else {
+            return response()->json("message: something went wrong");
+        }
+    }
+    public function deleteAddress($id)
+    {
+        if (Address::where('id', $id)->exists()) {
+            Address::find($id)->Delete();
+            return "success";
+        } else {
+            return response()->json("message: something went wrong");
+        }
     }
 }

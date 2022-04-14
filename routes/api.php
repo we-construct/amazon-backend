@@ -33,4 +33,6 @@ Route::prefix('/auth/user-profile')->middleware('api')->group(function () {
     Route::get('/', [AuthController::class, 'userProfile']);
     Route::get('/my-address',[UserController::class,'getAddresses']);
     Route::post('/my-address/add',[AddressController::class,'addAddress']);
+    Route::delete('/my-address/delete/{id}',[AddressController::class,'deleteAddress']);
+    Route::put('/my-address/update/{id}',[AddressController::class,'updateAddress']);
 });
