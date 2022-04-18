@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AddressController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -35,4 +36,8 @@ Route::prefix('/auth/user-profile')->middleware('api')->group(function () {
     Route::post('/my-address/add',[AddressController::class,'addAddress']);
     Route::delete('/my-address/delete/{id}',[AddressController::class,'deleteAddress']);
     Route::put('/my-address/update/{id}',[AddressController::class,'updateAddress']);
+});
+Route::prefix('/auth/shop')->middleware('api')->group(function () {
+//    Route::get('/', [ProductController::class, 'userProfile']);
+    Route::post('/add',[ProductController::class,'addProduct']);
 });
