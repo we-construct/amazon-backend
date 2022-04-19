@@ -18,7 +18,17 @@ class Product extends Model
         'category',
         'color',
         'price',
-        'product_type_id',
-        'product_size_id',
+        'product_type_id'
     ];
+
+    public function sizes() {
+        return $this->hasMany(Size::class,'product_id','id');
+    }
+    public function images() {
+        return $this->hasMany(Image::class,'product_id','id');
+    }
+
+    public function getProductSizesAttribute() {
+        return $this->sizes();
+    }
 }

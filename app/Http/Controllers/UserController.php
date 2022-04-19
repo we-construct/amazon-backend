@@ -14,4 +14,12 @@ class UserController extends Controller
         $address=auth()->user()->myAddress()->get();
         return $address;
     }
+    public function getProducts(Request $request)
+    {
+        $user = auth()->user();
+        $user->load('productsByTypes.products.sizes','productsByTypes.products.images');
+
+        return response()->json([$user->productsByTypes]);
+
+    }
 }

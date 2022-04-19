@@ -19,6 +19,20 @@ class ProductController extends Controller
         $productParent->save();
         $data = $request->all();
         for($requestIndex = 0; $requestIndex <= count($data)-1; $requestIndex++) {
+
+            $validator = Validator::make($data[$requestIndex], [
+                    $data[$requestIndex]['name'] => 'required',
+                    $data[$requestIndex]['description'] => 'required',
+                    $data[$requestIndex]['brand'] => 'required',
+                    $data[$requestIndex]['color'] => 'required',
+                    $data[$requestIndex]['images'] => 'required',
+                    $data[$requestIndex]['sizes'] => 'required'
+                ]
+            );
+
+            if ($validator->fails()) {
+                return response()->json(['message' => 'wrong params']);
+            }
             $product = Product:: create([
                 'name' => $data[$requestIndex]['name'],
                 'description' => $data[$requestIndex]['description'],
@@ -46,5 +60,9 @@ class ProductController extends Controller
             }
         }
         return response()->json(['message' => 'data saved successfully']);
+   }
+   public function getProduct(Request $request) {
+        $product = ProductParent::where('id',$request->parentId)->with('products.sizes','products.images')->get();
+       return response()->json($product[0]);
    }
 }

@@ -13,4 +13,7 @@ class ProductParent extends Model
         'user_id',
         'product_id',
     ];
+    public function products() {
+        return $this->hasMany(Product::class,'product_type_id','id');
+    }
 }

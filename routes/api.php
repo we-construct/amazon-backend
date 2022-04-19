@@ -38,6 +38,7 @@ Route::prefix('/auth/user-profile')->middleware('api')->group(function () {
     Route::put('/my-address/update/{id}',[AddressController::class,'updateAddress']);
 });
 Route::prefix('/auth/shop')->middleware('api')->group(function () {
-//    Route::get('/', [ProductController::class, 'userProfile']);
+    Route::get('/get-my-products', [UserController::class, 'getProducts']);
     Route::post('/add',[ProductController::class,'addProduct']);
+    Route::get('/get-product',[ProductController::class,'getProduct']);
 });
